@@ -7,6 +7,12 @@ const app = express();
 const db = require('./app/models/');
 const Role = db.role;
 
+
+app.use(cors(corsOptions));
+
+app.use(express.json());
+
+
 db.sequelize.sync({ force: true }).then(() => {
     console.log('Drop and Resync Db');
     initial();
@@ -19,10 +25,6 @@ var corsOptions = {
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
-
-app.use(cors(corsOptions));
-
-app.use(express.json());
 
 app.get("/", (req, res) => {
     res.json({ message: "Hello!" });
